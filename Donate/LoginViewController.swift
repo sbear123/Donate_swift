@@ -83,4 +83,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.present(signup,animated: true)
     }
 
+    @IBAction func Login(_ sugue: UIStoryboardSegue) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let tabViewController = storyBoard.instantiateViewController(withIdentifier: "View") as!UITabBarController
+        tabViewController.modalPresentationStyle = .fullScreen
+        self.present(tabViewController, animated: true, completion: nil)
+    }
 }

@@ -96,11 +96,10 @@ class SignViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func keyboardWillAppear(_ sender: NotificationCenter){
-        if (height != 250){
-            self.view.frame.origin.y -= 50
-            self.height += 50
+        if (height != 200){
+            self.view.frame.origin.y -= 200
+            self.height += 200
         }
-        
     }
     
     @objc func keyboardWillDisappear(_ sender: NotificationCenter){

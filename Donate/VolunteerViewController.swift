@@ -1,5 +1,5 @@
 //
-//  FirstViewController.swift
+//  SecondViewController.swift
 //  Donate
 //
 //  Created by 박지현 on 2020/09/04.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class VolunteerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
