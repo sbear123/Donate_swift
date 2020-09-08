@@ -14,7 +14,6 @@ class UserViewController: UIViewController {
     @IBOutlet var profile: UIButton!
     @IBOutlet var password: UIButton!
     @IBOutlet var image: UIImageView!
-    @IBOutlet var photo: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,14 +21,14 @@ class UserViewController: UIViewController {
         
         image.layer.cornerRadius = 0.5 * image.bounds.size.width
         image.clipsToBounds = true
-        
-        photo.layer.cornerRadius = 0.5 * photo.bounds.size.width
-        photo.clipsToBounds = true
 
     }
 
     @IBAction func Profile(){
-        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let ProfileViewController = storyBoard.instantiateViewController(withIdentifier: "Profile") 
+        ProfileViewController.modalPresentationStyle = .fullScreen
+        self.present(ProfileViewController, animated: true, completion: nil)
     }
     
     @IBAction func Password(){
@@ -37,7 +36,7 @@ class UserViewController: UIViewController {
     }
     
     @IBAction func Logout(){
-        
+        self.presentingViewController?.dismiss(animated: true)
     }
 
 }
