@@ -27,6 +27,7 @@ class SignViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        
         self.Name.delegate = self
         self.Email.delegate = self
         self.ID.delegate = self
@@ -116,70 +117,122 @@ class SignViewController: UIViewController, UITextFieldDelegate {
     @IBAction func SignUp(_ sender: Any){
         var results:String = "fail"
         
-        // 1. 전송할 값 준비
-        let id = (self.ID.text)!
-        let name = (self.Name.text)!
-        let email = (self.Email.text)!
-        let pw = (self.Password.text)!
-        let param: Dictionary = ["id": id, "password": pw,  "name": name, "email": email] // JSON 객체로 변환할 딕셔너리 준비
-        
-        let paramData = try! JSONSerialization.data(withJSONObject: param, options: [])
-        print(param)
-        
-        
-        // 2. URL 객체 정의
-        let url = URL(string: "http://localhost:8081/Donate/register.api");
-        
-        // 3. URLRequest 객체 정의 및 요청 내용 담기
-        var request = URLRequest(url: url!)
-        request.httpMethod = "POST"
-        request.httpBody = paramData
-        
-        // 5. URLSession 객체를 통해 전송 및 응답값 처리 로직 작성
-        
-        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
-            
-            guard let data = data, error == nil else {                                                 // check for fundamental networking error
-                print("error=\(error)")
-                return
+        if self.Name.text == "" {
+            let msg = "이름이 입력이 되지 않았습니다. 이름을 입력해 주세요."
+            let alert = UIAlertController(title: "", message: msg, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default) {(_) in
+            })
+            self.present (alert, animated:false)
+        }
+        else if self.Email.text == "" {
+            let msg = "이메일이 입력이 되지 않았습니다. 이메일을 입력해 주세요."
+            let alert = UIAlertController(title: "", message: msg, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default) {(_) in
+            })
+            self.present (alert, animated:false)
+        }
+            else if self.ID.text == "" {
+                let msg = "아이디가 입력이 되지 않았습니다. 아이디를 입력해 주세요."
+                let alert = UIAlertController(title: "", message: msg, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default) {(_) in
+                })
+                self.present (alert, animated:false)
             }
-            
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(response)")
+            else if self.Password.text == "" {
+                let msg = "비밀번호가 입력이 되지 않았습니다. 비밀번호를 입력해 주세요."
+                let alert = UIAlertController(title: "", message: msg, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default) {(_) in
+                })
+                self.present (alert, animated:false)
             }
-            let responseString = String(data: data, encoding: .utf8)
-            let dataJson:Data? = responseString!.data(using: .utf8)
-            if let dJson = dataJson{
-                var dataDIctionary:[String:Any]?
-                dataDIctionary = try! JSONSerialization.jsonObject(with: dJson,options:[]) as! [String:Any]
-                if let dJsonDic = dataDIctionary{
-                    print(dJsonDic)
-                    if let result = dJsonDic["result"]{
-                        results = result as! String
+            else if self.CheckPW.text == "" {
+                let msg = "비밀번호 확인이 입력이 되지 않았습니다. 비밀번호 확인을 입력해 주세요."
+                let alert = UIAlertController(title: "", message: msg, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default) {(_) in
+                })
+                self.present (alert, animated:false)
+            }
+        else if (self.CheckPW.text != self.Password.text) {
+            let msg = "비밀번호와 비밀번호확인이 다릅니다. 다시 입력해 주세요."
+            let alert = UIAlertController(title: "", message: msg, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default) {(_) in
+            })
+            self.present (alert, animated:false)
+        }
+        else {
+            
+            // 1. 전송할 값 준비
+            let id = (self.ID.text)!
+            let name = (self.Name.text)!
+            let email = (self.Email.text)!
+            let pw = (self.Password.text)!
+            let param: Dictionary = ["id": id, "password": pw,  "name": name, "email": email] // JSON 객체로 변환할 딕셔너리 준비
+            
+            let paramData = try! JSONSerialization.data(withJSONObject: param, options: [])
+            print(param)
+            
+            // 2. URL 객체 정의
+            let url = URL(string: "http://10.80.161.36:8081/Donate/register.api");
+            
+            // 3. URLRequest 객체 정의 및 요청 내용 담기
+            var request = URLRequest(url: url!)
+            request.httpMethod = "POST"
+            request.httpBody = paramData
+            
+            // 5. URLSession 객체를 통해 전송 및 응답값 처리 로직 작성
+            let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+                
+                guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                    print("error=\(error)")
+                    return
+                }
+                
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                    print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                    print("response = \(response)")
+                }
+                let responseString = String(data: data, encoding: .utf8)
+                let dataJson:Data? = responseString!.data(using: .utf8)
+                if let dJson = dataJson{
+                    var dataDIctionary:[String:String]?
+                    dataDIctionary = try! JSONSerialization.jsonObject(with: dJson,options:[]) as! [String:String]
+                    if let dJsonDic = dataDIctionary{
+                        print(dJsonDic)
+                        if let result = dJsonDic["result"]{
+                            results = result
+                            print(result)
+                            print (results)
+                        }
+                    }
+                }
+                print("responseString = \(responseString)")
+                if results == "ok"{
+                    DispatchQueue.main.async {
+                        let msg = "회원가입을 성공하셨습니다. 로그인을 해 주세요."
+                        let alert = UIAlertController(title: "성공", message: msg, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "확인", style: .default) {(_) in
+                            self.presentingViewController?.dismiss(animated: true)
+                        })
+                        self.ID.text = ""
+                        self.Password.text = ""
+                        self.Email.text = ""
+                        self.CheckPW.text = ""
+                        self.Name.text = ""
+                        self.present (alert, animated:false)
+                    }
+                }else if results == "fail"{
+                    //alert창 띄우기
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "동일한 아이디 존재", message: "동일한 아이디를 사용하는 사람이 있습니다. 다른 아이디를 입력해주세요.", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "확인", style: .default) {(_) in}
+                        alert.addAction(okAction)
+                        self.present (alert, animated:false)
                     }
                 }
             }
-            print("responseString = \(responseString)")
-        }
-        
-        // 6. POST 전송
-        task.resume()
-        
-        if results == "ok"{
-            let alert = UIAlertController(title: "성공", message: "회원가입을 성공하셨습니다. 로그인을 해 주세요.", preferredStyle: UIAlertController.Style.alert)
-            let okAction = UIAlertAction(title: "확인", style: .default) {(action) in}
-            alert.addAction(okAction)
-            self.present (alert, animated:false, completion: nil)
-            self.presentingViewController?.dismiss(animated: true)
-        }else{
-            //alert창 띄우기
-            let alert = UIAlertController(title: "동일한 아이디 존재", message: "동일한 아이디를 사용하는 사람이 있습니다. 다른 아이디를 입력해주세요.", preferredStyle: UIAlertController.Style.alert)
-            let okAction = UIAlertAction(title: "확인", style: .default) {(action) in}
-            alert.addAction(okAction)
-            self.present (alert, animated:false, completion: nil)
+            // 6. POST 전송
+            task.resume()
         }
     }
-    
 }
 

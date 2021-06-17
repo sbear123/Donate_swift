@@ -8,13 +8,96 @@
 
 import UIKit
 
-class VolunteerViewController: UIViewController {
-
+class VolunteerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    var idxs = [Int]()
+    var titles = [String]()
+    var urls = [String]()
+    var days = [String]()
+    var tags = [String]()
+    var places = [String]()
+    var length: Int! = 0
+    var index: Int! = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        self.getJson()
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+
     }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(idxs.count)
+        var idxLeng: Int!
+        idxLeng = self.idxs.count
+        return idxLeng
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FirstCell", for: indexPath) as! WebSitesView
+        print(indexPath.row)
+        cell.titleLabel.text = titles[indexPath.row]
+        cell.urlLabel.text = urls[indexPath.row]
+        cell.tagLabel.text = tags[indexPath.row]
+        cell.dayLabel.text = days[indexPath.row]
+        cell.placeLabel.text = places[indexPath.row]
 
-
+            print(self.titles[indexPath.row])
+        return cell
+    }
+    
+    func getJson () {
+        // 1. URL 객체 정의
+        let url = URL(string: "http://10.80.161.36:8081/Donate/volunteer.api");
+        
+        // 2. URLRequest 객체 정의 및 요청 내용 담기
+        var request = URLRequest(url: url!)
+        request.httpMethod = "GET"  
+        
+        // 3. URLSession 객체를 통해 전송 및 응답값 처리 로직 작성
+        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+            
+            guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                print("error=\(error)")
+                return
+            }
+            
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(response)")
+            }
+            let responseString = String(data: data, encoding: .utf8)
+            let dataJson:Data? = responseString!.data(using: .utf8)
+            if let dJson = dataJson{
+                var dataDIctionary: [[String: Any]]?
+                dataDIctionary = try! JSONSerialization.jsonObject(with: dJson,options:[]) as! [[String: Any]]
+                if let dJsonDic = dataDIctionary{
+                    for dataIndex in dJsonDic{
+                        self.idxs.append(dataIndex["idx"] as! Int)
+                        self.titles.append(dataIndex["volunteerName"] as! String)
+                        self.urls.append(dataIndex["url"] as! String)
+                        self.days.append(dataIndex["period"] as! String)
+                        self.places.append(dataIndex["place"] as! String)
+                        self.tags.append(dataIndex["tag"] as! String)
+                    }
+                }
+            }
+            self.tableView.reloadData()
+            print("responseString = \(responseString)")
+        }
+        // 6. POST 전송
+        task.resume()
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let surl = urls[indexPath.row]
+        if let url = URL(string: surl) {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
 }
-

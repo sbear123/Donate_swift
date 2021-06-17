@@ -10,7 +10,7 @@
 		22199050B9260566346F663F /* Pods_Donate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F39352E3A2A110D4F880B3D /* Pods_Donate.framework */; };
 		4360DA132504950400B64A03 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4360DA122504950400B64A03 /* LoginViewController.swift */; };
 		4360DA152504953F00B64A03 /* SignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4360DA142504953F00B64A03 /* SignViewController.swift */; };
-		43629B9925060B6E00CC492E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43629B9825060B6E00CC492E /* ProfileViewController.swift */; };
+		43ACB8F22507A4A1001E86A4 /* WebSitesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43ACB8F12507A4A1001E86A4 /* WebSitesView.swift */; };
 		43AE27622505B68F0026717A /* DonateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AE27612505B68F0026717A /* DonateViewController.swift */; };
 		43AE27642505B6C90026717A /* VolunteerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AE27632505B6C90026717A /* VolunteerViewController.swift */; };
 		43AE27662505B6E90026717A /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AE27652505B6E90026717A /* UserViewController.swift */; };
@@ -27,7 +27,7 @@
 		2F39352E3A2A110D4F880B3D /* Pods_Donate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Donate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4360DA122504950400B64A03 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4360DA142504953F00B64A03 /* SignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignViewController.swift; sourceTree = "<group>"; };
-		43629B9825060B6E00CC492E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		43ACB8F12507A4A1001E86A4 /* WebSitesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSitesView.swift; sourceTree = "<group>"; };
 		43AE27612505B68F0026717A /* DonateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateViewController.swift; sourceTree = "<group>"; };
 		43AE27632505B6C90026717A /* VolunteerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolunteerViewController.swift; sourceTree = "<group>"; };
 		43AE27652505B6E90026717A /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
@@ -90,7 +90,7 @@
 				43AE27612505B68F0026717A /* DonateViewController.swift */,
 				43AE27632505B6C90026717A /* VolunteerViewController.swift */,
 				43AE27652505B6E90026717A /* UserViewController.swift */,
-				43629B9825060B6E00CC492E /* ProfileViewController.swift */,
+				43ACB8F12507A4A1001E86A4 /* WebSitesView.swift */,
 			);
 			path = Donate;
 			sourceTree = "<group>";
@@ -228,8 +228,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				43DB0FEF25023AE10058EC54 /* BrandViewController.swift in Sources */,
+				43ACB8F22507A4A1001E86A4 /* WebSitesView.swift in Sources */,
 				43AE27662505B6E90026717A /* UserViewController.swift in Sources */,
-				43629B9925060B6E00CC492E /* ProfileViewController.swift in Sources */,
 				43AE27622505B68F0026717A /* DonateViewController.swift in Sources */,
 				4360DA152504953F00B64A03 /* SignViewController.swift in Sources */,
 				43DB0FED25023AE10058EC54 /* HomeViewController.swift in Sources */,
@@ -384,6 +384,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A58343K98Z;
 				INFOPLIST_FILE = Donate/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -403,6 +404,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A58343K98Z;
 				INFOPLIST_FILE = Donate/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
